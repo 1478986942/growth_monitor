@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: growth-monitor-backend
+    env: python
+    region: oregon
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: python backend/app.py
+    envVars:
+      - key: DATABASE_URI
+        fromDatabase:
+          name: growth-monitor-db
+          property: connectionString
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: MAIL_SERVER
+        value: smtp.qq.com
+      - key: MAIL_PORT
+        value: "465"
+      - key: MAIL_USE_TLS
+        value: "False"
+      - key: MAIL_USE_SSL
+        value: "True"
+      - key: MAIL_USERNAME
+        sync: false
+      - key: MAIL_PASSWORD
+        sync: false
+      - key: MAIL_DEFAULT_SENDER
+        sync: false
+      - key: PORT
+        value: "10000"
+databases:
+  - name: growth-monitor-db
+    region: oregon
+    plan: free

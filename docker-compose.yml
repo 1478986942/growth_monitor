@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: growth_monitor_db
+    environment:
+      POSTGRES_DB: growth_monitor
+      POSTGRES_USER: growth_user
+      POSTGRES_PASSWORD: growth_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database.sql:/docker-entrypoint-initdb.d/database.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U growth_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: growth_monitor_backend
+    ports:
+      - "5555:5555"
+    environment:
+      DATABASE_URI: postgresql://growth_user:growth_password@db:5432/growth_monitor
+      JWT_SECRET_KEY: JK1cITbR0eZ1TTXrT2DOOEej4aLyWWcz0LBN00L0LXk
+      MAIL_SERVER: smtp.qq.com
+      MAIL_PORT: 465
+      MAIL_USE_TLS: False
+      MAIL_USE_SSL: True
+      MAIL_USERNAME: 1478986942@qq.com
+      MAIL_PASSWORD: xjscoapzfgvqibah
+      MAIL_DEFAULT_SENDER: 1478986942@qq.com
+      PORT: 5555
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
