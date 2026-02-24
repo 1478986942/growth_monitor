@@ -1,0 +1,30 @@
+# 虚拟环境
+venv/
+
+# 环境变量文件
+.env
+
+# 前端依赖
+node_modules/
+package-lock.json
+
+# 构建文件
+frontend/dist/
+
+# 日志文件
+*.log
+
+# IDE文件
+.vscode/
+.idea/
+
+# 数据库文件
+*.sql
+
+# 编译文件
+__pycache__/
+*.pyc
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
