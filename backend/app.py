@@ -16,6 +16,12 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'your-secret-key')
 
 # 初始化数据库
+import sys
+import os
+
+# 添加backend目录到Python路径
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 from models import db
 from models.user import User
 from models.child import Child
@@ -27,6 +33,7 @@ from models.resource import Resource
 from models.verification_code import VerificationCode
 
 # 初始化路由
+# 添加当前目录到Python路径，确保能找到routes模块
 from routes import auth_bp, children_bp, growth_bp, risk_bp, intervention_bp, hospital_bp, resource_bp
 
 # 配置CORS
