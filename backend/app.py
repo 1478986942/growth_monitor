@@ -15,14 +15,17 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI', 'mysql+pymysql
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'your-secret-key')
 
-# 初始化数据库
-import sys
-import os
-
 # 添加backend目录到Python路径
+import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+# 初始化数据库
 from models import db
+
+# 将db与Flask应用关联
+db.init_app(app)
+
+# 导入模型
 from models.user import User
 from models.child import Child
 from models.growth import GrowthRecord
