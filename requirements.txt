@@ -1,7 +1,7 @@
 setuptools
 wheel
 Flask==2.0.1
-Flask-SQLAlchemy==2.5.1
+Flask-SQLAlchemy==3.0.3
 Flask-CORS==3.0.10
 PyJWT==2.1.0
 bcrypt==3.2.0
